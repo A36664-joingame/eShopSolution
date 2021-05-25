@@ -1,0 +1,124 @@
+﻿@using eShopSolution.ViewModels.Common;
+@using eShopSolution.ViewModels.System.Users;
+
+@model PagedResult<UserVm>
+
+@{
+    ViewData["Title"] = "Danh sách người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--trang con dùng lại Scripts nhớ phải đúng tên nhe-->
+@section Scripts{
+    <script>
+        // vào trong tài liệu mà đọc về jquery nhe
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Danh sách người dùng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách người dùng</li>
+    </ol>
+
+    <div class="card mb-12">
+        <div class="card-header">
+
+            <div class="row">
+                <div class="col-md-6"><a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a></div>
+
+                <div class="col-md-6">
+                    <!--md có nghĩa là midium-->
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <!-- Method là get nó sẽ chuyền tham số trên query-->
+                            <div class="col-md-9">
+                                <input type="text" value="@ViewBag.keyword" name="keyword" class="form-control" /> <!--name =keword chính là tham số-->
+                                <!--để value là  ViewBag.keyword  để nó giữ được giá trị key trên ô tìm kiếm , ViewBag.keyword  được lấy từ controller tương ứng-->
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary">Tìm</button>
+                                <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-secondary">Tải Lại</button>  <!-- khi click thì nó đến đường dẫn kia như kiểu đi lại trang nên gọi là reset-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    // có thể vào đây xem bootstrap pagination : https://getbootstrap.com/docs/4.0/components/alerts/
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                    // muốn show song nó ẩn đi thì ta phải dùng jquery  ,, đây là cái thông báo thành công khi thêm sửa xóa thành công và thêm quyền
+                }
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Họ
+                            </th>
+                            <th>
+                                Tên
+                            </th>
+                            <th>
+                                Số điện thoại
+                            </th>
+                            <th>
+                                Tài khoản
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items) //<!-- Model.Items là ra được list-->
+                        {
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    <!--id ở đây là biến mặc định trong cái Routing của chúng ta , nhơ phải thêm id vào để nó biding suống ko thì thiếu nó chả chạy đau -->
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |   <!--bên hàm Edit Details và Delete ta cần chuyền vào id lấy từ request lên chỗ này cũng cần chuyền-->
+                                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id })|
+                                    @Html.ActionLink("Gán Quyền", "RoleAssign", new { id = item.Id })  <!--để gán quyền ta phải thêm thằng nữa ở đây-->
+                                    <!-- thằng thứ nhất là text thằng thứ hai là action -->
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- vào đây mà đọc cách sử dụng Tag Helper-->
+            <!--https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components?view=aspnetcore-3.1-->
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>

@@ -1,8 +1,126 @@
-﻿@{
+﻿@model HomeViewModel
+@using eShopSolution.ViewModels.Catalog.Products
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc
+@{
     ViewData["Title"] = "Home Page";
 }
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
+@section slider{
+    <div id="carouselBlk">
+        <div id="myCarousel" class="carousel slide">
+            <div class="carousel-inner">
+                @for (var index = 0; index < Model.Slides.Count; index++)
+                {
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+                    <div class="item @(index == 0 ? "active" : " ")">
+                        <div class="container">
+                            <a href="@Model.Slides[index].Url"><img style="width:100%" src="@Model.Slides[index].Image" alt="@Model.Slides[index].Name" /></a>
+                            <div class="carousel-caption">
+                                <h4>@Model.Slides[index].Name</h4>
+                                <p>@Model.Slides[index].Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        </div>
+    </div>
+}
+<div class="well well-small">
+    <h4>
+        <localize> Featured Products</localize>
+        <small class="pull-right">200+ featured products</small>
+    </h4>
+    <div class="row-fluid">
+        <div id="featured" class="carousel slide">
+            <div class="carousel-inner">
+                @{
+                    List<List<ProductVm>> featuredProducts = new List<List<ProductVm>>();
+                    List<ProductVm> featurePart = new List<ProductVm>();
+                }
+                @for (int index = 0; index < Model.FeaturedProducts.Count; index++)
+                {
+
+                    if (featurePart.Count <= 4)
+                    {
+                        featurePart.Add(Model.FeaturedProducts[index]);
+                        if (index != Model.FeaturedProducts.Count-1 && featurePart.Count!=4)
+                            continue;
+
+                    }
+
+                    featuredProducts.Add(featurePart);
+                    featurePart = new List<ProductVm>();
+
+                }
+                @for (int index = 0; index < featuredProducts.Count; index++)// lặp 4 cái lớn
+                {
+
+                    <div class="item @(index == 0 ? "active" : " ")">
+                        <ul class="thumbnails">
+                            @foreach (var item in featuredProducts[index].ToList()) // lặp qua 4 cái bé
+                            {
+                                var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
+                                <li class="span3">
+                                    <div class="thumbnail">
+                                        <i class="tag"></i>
+                                        <a href="@url">
+                                            <img src="@_configuration["LoadFolderApi"]/../user-content/@item.ThumbnailImage" alt="@item.Name">
+                                        </a>
+                                        <div class="caption">
+                                            <h5>@item.Name</h5>
+                                            <h4><a class="btn" href="@url" localize-content>VIEW</a> <span class="pull-right"><localize>$</localize> @item.Price.ToString()</span></h4>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                }
+            </div>
+            <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
+            <a class="right carousel-control" href="#featured" data-slide="next">›</a>
+        </div>
+    </div>
 </div>
+<h4><localize>Latest Products</localize></h4>
+<ul class="thumbnails">
+
+    @foreach (var item in Model.LatestProducts)
+    {
+        var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
+
+        <li class="span3">
+            <div class="thumbnail">
+                <a href="@url"><img src="@_configuration["LoadFolderApi"]/../user-content/@item.ThumbnailImage" alt="@item.Name" /></a>
+                <div class="caption">
+                    <h5>@item.Name</h5>
+                    <p>
+                        @item.Description
+                    </p>
+
+                    <h4 style="text-align:center">
+                        <a class="btn" href="@url">
+                            <i class="icon-zoom-in"></i>
+                        </a>
+                        <a class="btn" href="@url">
+                            <localize>
+                                Add to
+                            </localize>
+                            <i class="icon-shopping-cart"></i>
+                        </a>
+                        <a class="btn btn-primary" href="@url">
+                            <localize>$</localize>  @item.Price
+                        </a>
+                    </h4>
+                </div>
+            </div>
+        </li>
+    }
+</ul>

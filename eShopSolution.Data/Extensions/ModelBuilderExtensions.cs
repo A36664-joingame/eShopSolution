@@ -22,9 +22,8 @@ namespace eShopSolution.Data.Extensions
                   );
 
             modelBuilder.Entity<Language>().HasData(
-                new Language() { Id = "vi-VN", Name = "Tiếng Việt", IsDefault = true },
-                new Language() { Id = "en-US", Name = "Tiếng Anh", IsDefault = false }
-
+                new Language() { Id = "vi", Name = "Tiếng Việt", IsDefault = true },
+                new Language() { Id = "en", Name = "Tiếng Anh", IsDefault = false }
 
                 );
 
@@ -36,7 +35,6 @@ namespace eShopSolution.Data.Extensions
                     ParentId = null,
                     SortOrder = 1,
                     Status = Status.Active,
-
                 },
                  new Category()
                  {
@@ -45,23 +43,17 @@ namespace eShopSolution.Data.Extensions
                      ParentId = null,
                      SortOrder = 2,
                      Status = Status.Active,
-
                  });
 
             modelBuilder.Entity<CategoryTranslation>().HasData(
 
-                        new CategoryTranslation() { Id = 1, CategoryId = 1, Name = "Áo Nam", LanguageId = "vi-VN", SeoDescription = "Sản phảm áo thời trang nam", SeoAlias = "ao-nam", SeoTitle = "Sản phẩm áo thời trang nam" }, // vì đây là con lên ko cần chỉ ra đủ hết các thuộc tính như thằng chính
-                        new CategoryTranslation() { Id = 2, CategoryId = 1, Name = "Men Shirt", LanguageId = "en-US", SeoAlias = "men-shirt", SeoDescription = "the shirt product for men", SeoTitle = "the shirt product for men" },
+                        new CategoryTranslation() { Id = 1, CategoryId = 1, Name = "Áo Nam", LanguageId = "vi", SeoDescription = "Sản phảm áo thời trang nam", SeoAlias = "ao-nam", SeoTitle = "Sản phẩm áo thời trang nam" }, // vì đây là con lên ko cần chỉ ra đủ hết các thuộc tính như thằng chính
+                        new CategoryTranslation() { Id = 2, CategoryId = 1, Name = "Men Shirt", LanguageId = "en", SeoAlias = "men-shirt", SeoDescription = "the shirt product for men", SeoTitle = "the shirt product for men" },
 
-                        new CategoryTranslation() { Id = 3, CategoryId = 2, Name = "Áo Nữ", LanguageId = "vi-VN", SeoDescription = "Sản phảm áo thời trang nữ", SeoAlias = "ao-nu", SeoTitle = "Sản phẩm áo thời trang nữ" },
-                        new CategoryTranslation() { Id = 4, CategoryId = 2, Name = "Women Shirt", LanguageId = "en-US", SeoAlias = "Women-shirt", SeoDescription = "the shirt product for Women", SeoTitle = "the shirt product for Women" }
-
+                        new CategoryTranslation() { Id = 3, CategoryId = 2, Name = "Áo Nữ", LanguageId = "vi", SeoDescription = "Sản phảm áo thời trang nữ", SeoAlias = "ao-nu", SeoTitle = "Sản phẩm áo thời trang nữ" },
+                        new CategoryTranslation() { Id = 4, CategoryId = 2, Name = "Women Shirt", LanguageId = "en", SeoAlias = "Women-shirt", SeoDescription = "the shirt product for Women", SeoTitle = "the shirt product for Women" }
 
                     );
-
-
-
-
 
             modelBuilder.Entity<Product>().HasData(
               new Product()
@@ -72,10 +64,16 @@ namespace eShopSolution.Data.Extensions
                   Price = 2000000,
                   Stock = 0,
                   ViewCount = 0,
-
-
-
-              }
+              },
+               new Product()
+               {
+                   Id = 2,
+                   DateCreated = DateTime.Now,
+                   OriginalPrice = 1000000,
+                   Price = 2000000,
+                   Stock = 0,
+                   ViewCount = 0,
+               }
 
                 );
 
@@ -85,7 +83,7 @@ namespace eShopSolution.Data.Extensions
                     Id = 1,
                     ProductId = 1,
                     Name = "Áo sơ mi nam trắng nguyễn lực",
-                    LanguageId = "vi-VN",
+                    LanguageId = "vi",
                     SeoDescription = "Áo sơ mi nam trắng nguyễn lực",
                     SeoAlias = "ao-so-mi-nam-trang-nguyen-luc",
                     SeoTitle = "Áo sơ mi nam trắng nguyễn lực",
@@ -96,9 +94,9 @@ namespace eShopSolution.Data.Extensions
                 new ProductTranslation()
                 {
                     Id = 2,
-                    ProductId = 1,
+                    ProductId = 2,
                     Name = "nguyen luc Men T-Shirt",
-                    LanguageId = "en-US",
+                    LanguageId = "en",
                     SeoAlias = "nguyen-luc-men-T-shirt",
                     SeoDescription = "nguyen luc Men T-Shirt",
                     SeoTitle = "nguyen luc Men T-Shirt",
@@ -108,12 +106,9 @@ namespace eShopSolution.Data.Extensions
 
                 );
 
-
             modelBuilder.Entity<ProductInCategory>().HasData(
                  new ProductInCategory() { ProductId = 1, CategoryId = 1, }
                 );
-
-
 
             // any guid
             var ROLE_ID = new Guid("3792AF46-9A8F-4AE6-A1C9-C9C910941E5B");
@@ -124,8 +119,8 @@ namespace eShopSolution.Data.Extensions
                 Id = ROLE_ID,  // chữ tool trên kia có thể tạo cho ta guild mới nhe
                 Name = "admin",
                 NormalizedName = "admin",
-                Description="Administrator role"
-            }) ;
+                Description = "Administrator role"
+            });
 
             var hasher = new PasswordHasher<AppUser>(); //
             modelBuilder.Entity<AppUser>().HasData(new AppUser
@@ -141,7 +136,7 @@ namespace eShopSolution.Data.Extensions
                 FirstName = "luc",
                 LastName = "van",
                 DOB = new DateTime(2001, 06, 16)
-            }) ;
+            });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
             {
@@ -149,8 +144,72 @@ namespace eShopSolution.Data.Extensions
                 UserId = ADMIN_ID
             });
 
-            // song thì ta chạy lênh: add-migration SeedIdentityUser  và nhớ update-database
+            modelBuilder.Entity<Slide>().HasData(
+              new Slide()
+              {
+                  Id = 1,
+                  Name = "Second Thumbnail label",
+                  Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                  SortOrder = 1,
+                  Url = "#",
+                  Image = "/themes/images/carousel/1.png",
+                  Status = Status.Active
+              },
+              new Slide()
+              {
+                  Id = 2,
+                  Name = "Second Thumbnail label",
+                  Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                  SortOrder = 2,
+                  Url = "#",
+                  Image = "/themes/images/carousel/2.png",
+                  Status = Status.Active
+              },
+              new Slide()
+              {
+                  Id = 3,
+                  Name = "Second Thumbnail label",
+                  Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                  SortOrder = 3,
+                  Url = "#",
+                  Image = "/themes/images/carousel/3.png",
+                  Status = Status.Active
+              }
+              ,
+              new Slide()
+              {
+                  Id = 4,
+                  Name = "Second Thumbnail label",
+                  Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                  SortOrder = 4,
+                  Url = "#",
+                  Image = "/themes/images/carousel/4.png",
+                  Status = Status.Active
+              }
+              ,
+              new Slide()
+              {
+                  Id = 5,
+                  Name = "Second Thumbnail label",
+                  Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                  SortOrder = 5,
+                  Url = "#",
+                  Image = "/themes/images/carousel/5.png",
+                  Status = Status.Active
+              }
+              ,
+              new Slide()
+              {
+                  Id = 6,
+                  Name = "Second Thumbnail label",
+                  Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                  SortOrder = 6,
+                  Url = "#",
+                  Image = "/themes/images/carousel/6.png",
+                  Status = Status.Active
+              });
 
+            // song thì ta chạy lênh: add-migration SeedIdentityUser  và nhớ update-database
         }
     }
 }

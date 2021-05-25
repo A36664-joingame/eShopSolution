@@ -1,0 +1,42 @@
+﻿@model eShopSolution.ViewModels.Catalog.Products.CategoryAssignRequest
+
+@{
+    ViewData["Title"] = "Gán Danh Mục";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Gán Quyền</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Gán Danh Mục</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+
+            <a class="btn btn-success" asp-action="Index" asp-controller="Product">Trở lại danh sách</a>
+        </div>
+        <div class="card-body">
+            <form asp-action="CategoryAssign">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" /> <!--thằng này cần submit lên một cái Id-->
+                @for (var i = 0; i < Model.Categories.Count; i++)
+                {
+                    <div class="form-group">
+                        <label class="control-label">
+
+                            @Model.Categories[i].Name
+                            <input type="checkbox" asp-for="Categories[i].Selected" /> <!--có nếu check thì chuyền giá trị bool cho selected-->
+                            <input type="hidden" asp-for="Categories[i].Id" />
+                            <input type="hidden" asp-for="Categories[i].Name" />
+                        </label>
+                    </div>
+                }
+                <div class="form-group">
+                    <input type="submit" value="Lưu Lại" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
