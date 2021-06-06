@@ -31,12 +31,12 @@ namespace eShopSolution.ApiIntergration
             var sessions = _httpContextAccessor
                 .HttpContext
                 .Session // Session được cài đạt trong startup
-                .GetString(SystemConstants.Appsettings.Token);
+                .GetString(SystemConstants.AppSettings.Token);
 
             // tạo ra một client
             var client = _httpClientFactory.CreateClient();
             // có địa chỉ giống địa chỉ cấu hình local host bên appsetting
-            client.BaseAddress = new Uri(_configuration[SystemConstants.Appsettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             //ủy quyền token giống đăng nhập Swagger để mở khóa
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);  // điền token vào đây để xác thực (giông mật khâu)
             // với client lấy response trên url

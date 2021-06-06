@@ -61,6 +61,7 @@ namespace eShopSolution.Application.Catalog.Products
                 {
                     new ProductTranslation()
                     {
+                       
                         Name=request.Name,
                         Description=request.Description,
                         Details=request.Details,
@@ -195,6 +196,9 @@ namespace eShopSolution.Application.Catalog.Products
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId
             && x.LanguageId == languageId);
 
+            var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.Isdefault == true).FirstOrDefaultAsync();
+
+            // lấy ra tất cả danh mục của product này
             var categories = await (from c in _context.Categories
                                     join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
                                     join pic in _context.ProductInCategories
@@ -203,6 +207,7 @@ namespace eShopSolution.Application.Catalog.Products
                                     select ct.Name).ToListAsync();
             var productViewModel = new ProductVm()
             {
+                
                 Id = product.Id,
                 DateCreated = product.DateCreated,
                 Description = productTranslation != null ? productTranslation.Description : null,
@@ -217,7 +222,8 @@ namespace eShopSolution.Application.Catalog.Products
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
                 Categories = categories,
-                IsFeatured = product.IsFeatured
+                IsFeatured = product.IsFeatured,
+                ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
             };
             return productViewModel;
         }
@@ -230,7 +236,7 @@ namespace eShopSolution.Application.Catalog.Products
 
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(
                 x => x.ProductId == request.Id &&
-                x.LanguageId == request.LanguageId);// lấy thông tin sản phẩm theo id và ngôn ngữ
+                x.LanguageId == request.LanguageId);
 
             if (product == null || productTranslation == null)
             {

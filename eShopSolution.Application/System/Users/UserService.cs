@@ -50,7 +50,7 @@ namespace eShopSolution.Application.System.Users
                  new Claim(ClaimTypes.Email,user.Email),
                  new Claim(ClaimTypes.Role,string.Join(";",roles)), // string.Join là nối tất cả các dối dượng lại thành một chuối cách nhau bới giấu ;
                  new Claim(ClaimTypes.Name,request.UserName)
-            };
+            }; 
 
             // bắt đầu mã hóa Claim bằng Symmetric vào appseting của Api cài đặt
             //bắt đầu mã hóa token
@@ -156,6 +156,7 @@ namespace eShopSolution.Application.System.Users
             {
                 return new ApiErrorResult<bool>("Emai đã tồn tại");
             }
+
             user = new AppUser()
             {
                 DOB = request.DOB,
@@ -165,13 +166,12 @@ namespace eShopSolution.Application.System.Users
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber
             };
-
-            var rusult = await _userManager.CreateAsync(user, request.Password);
-            if (rusult.Succeeded)
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
             {
                 return new ApiSuccessResult<bool>();
             }
-            return new ApiErrorResult<bool>("Đăng kí không thành công");
+            return new ApiErrorResult<bool>(result.Errors.ToList());
         }
 
         // phương thức Role

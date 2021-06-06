@@ -64,6 +64,7 @@ namespace eShopSolution.Data.Extensions
                   Price = 2000000,
                   Stock = 0,
                   ViewCount = 0,
+                  IsFeatured = true
               },
                new Product()
                {
@@ -73,36 +74,211 @@ namespace eShopSolution.Data.Extensions
                    Price = 2000000,
                    Stock = 0,
                    ViewCount = 0,
-               }
+                   IsFeatured = true
+               },
+                new Product()
+                {
+                    Id = 3,
+                    DateCreated = DateTime.Now,
+                    OriginalPrice = 1000000,
+                    Price = 2500000,
+                    Stock = 0,
+                    ViewCount = 0,
+                    IsFeatured = true
+                },
+                 new Product()
+                 {
+                     Id = 4,
+                     DateCreated = DateTime.Now,
+                     OriginalPrice = 1000000,
+                     Price = 3000000,
+                     Stock = 0,
+                     ViewCount = 0,
+                     IsFeatured = true
+                 },
+                  new Product()
+                  {
+                      Id = 5,
+                      DateCreated = DateTime.Now,
+                      OriginalPrice = 1000000,
+                      Price = 1200000,
+                      Stock = 0,
+                      ViewCount = 0,
+                      IsFeatured = true
+                  },
+                   new Product()
+                   {
+                       Id = 6,
+                       DateCreated = DateTime.Now,
+                       OriginalPrice = 1000000,
+                       Price = 45000000,
+                       Stock = 0,
+                       ViewCount = 0,
+                       IsFeatured = true
+                   }
 
-                );
+                ) ;
 
             modelBuilder.Entity<ProductTranslation>().HasData(
+                
                 new ProductTranslation()
                 {
                     Id = 1,
                     ProductId = 1,
-                    Name = "Áo sơ mi nam trắng nguyễn lực",
+                    Name = "Cơm gà",
                     LanguageId = "vi",
-                    SeoDescription = "Áo sơ mi nam trắng nguyễn lực",
-                    SeoAlias = "ao-so-mi-nam-trang-nguyen-luc",
-                    SeoTitle = "Áo sơ mi nam trắng nguyễn lực",
-                    Details = "Áo sơ mi nam trắng nguyễn lực",
-                    Description = "Áo sơ mi nam trắng nguyễn lực"
+                    SeoDescription = "Cơm gà ngon bổ rẻ",
+                    SeoAlias = "com-ga",
+                    SeoTitle = "Cơm gà",
+                    Details = "Cơm gà ngon bổ rẻ",
+                    Description = "Cơm gà ngon bổ rẻ"
                 },
 
                 new ProductTranslation()
                 {
                     Id = 2,
                     ProductId = 2,
-                    Name = "nguyen luc Men T-Shirt",
-                    LanguageId = "en",
-                    SeoAlias = "nguyen-luc-men-T-shirt",
-                    SeoDescription = "nguyen luc Men T-Shirt",
-                    SeoTitle = "nguyen luc Men T-Shirt",
-                    Details = "nguyen luc Men T-Shirt",
-                    Description = "nguyen luc Men T-Shirt"
-                }
+                    Name = "Cơm gà",
+                    LanguageId = "vi",
+                    SeoDescription = "Cơm gà ngon bổ rẻ",
+                    SeoAlias = "com-ga",
+                    SeoTitle = "Cơm gà",
+                    Details = "Cơm gà ngon bổ rẻ",
+                    Description = "Cơm gà ngon bổ rẻ"
+                },
+                  new ProductTranslation()
+                  {
+                      Id = 3,
+                      ProductId = 3,
+                      Name = "Áo sơ mi nam trắng nguyễn lực",
+                      LanguageId = "vi",
+                      SeoDescription = "Áo sơ mi nam trắng nguyễn lực",
+                      SeoAlias = "ao-so-mi-nam-trang-nguyen-luc",
+                      SeoTitle = "Áo sơ mi nam trắng nguyễn lực",
+                      Details = "Áo sơ mi nam trắng nguyễn lực",
+                      Description = "Áo sơ mi nam trắng nguyễn lực"
+                  },
+                    new ProductTranslation()
+                    {
+                        Id = 4,
+                        ProductId = 4,
+                        Name = "Áo sơ mi nam trắng nguyễn lực",
+                        LanguageId = "vi",
+                        SeoDescription = "Áo sơ mi nam trắng nguyễn lực",
+                        SeoAlias = "ao-so-mi-nam-trang-nguyen-luc",
+                        SeoTitle = "Áo sơ mi nam trắng nguyễn lực",
+                        Details = "Áo sơ mi nam trắng nguyễn lực",
+                        Description = "Áo sơ mi nam trắng nguyễn lực"
+                    },
+                      new ProductTranslation()
+                      {
+                          Id = 5,
+                          ProductId = 5,
+                          Name = "Áo sơ mi nam trắng nguyễn lực",
+                          LanguageId = "vi",
+                          SeoDescription = "Áo sơ mi nam trắng nguyễn lực",
+                          SeoAlias = "ao-so-mi-nam-trang-nguyen-luc",
+                          SeoTitle = "Áo sơ mi nam trắng nguyễn lực",
+                          Details = "Áo sơ mi nam trắng nguyễn lực",
+                          Description = "Áo sơ mi nam trắng nguyễn lực"
+                      },
+                        new ProductTranslation()
+                        {
+                            Id = 6,
+                            ProductId = 6,
+                            Name = "Áo sơ mi nam trắng nguyễn lực",
+                            LanguageId = "vi",
+                            SeoDescription = "Áo sơ mi nam trắng nguyễn lực",
+                            SeoAlias = "ao-so-mi-nam-trang-nguyen-luc",
+                            SeoTitle = "Áo sơ mi nam trắng nguyễn lực",
+                            Details = "Áo sơ mi nam trắng nguyễn lực",
+                            Description = "Áo sơ mi nam trắng nguyễn lực"
+                        }
+
+                );
+
+            modelBuilder.Entity<ProductImage>().HasData(
+
+                new ProductImage()
+                {
+
+                    Id=1,
+                    Caption="",
+                    DateCreated=DateTime.Now,
+                    FileSize=100,
+                    ImagePath= "0f75e9c5-b794-4f2d-a328-7de10107b36c.jpg",
+                    Isdefault=true,
+                    ProductId=1,
+                    SortOrder=1
+                    
+                },
+                 new ProductImage()
+                 {
+
+                     Id = 2,
+                     Caption = "",
+                     DateCreated = DateTime.Now,
+                     FileSize = 100,
+                     ImagePath = "4b3f6988-c6ab-4f18-bf60-e5adf20c6ad3.jpeg",
+                     Isdefault = true,
+                     ProductId = 2,
+                     SortOrder = 1
+
+                 },
+                  new ProductImage()
+                  {
+
+                      Id = 3,
+                      Caption = "",
+                      DateCreated = DateTime.Now,
+                      FileSize = 100,
+                      ImagePath = "5b6cd57e-0dab-4a51-9150-36db8773aac8.jpeg",
+                      Isdefault = true,
+                      ProductId = 3,
+                      SortOrder = 1
+
+                  },
+                  
+                    new ProductImage()
+                    {
+
+                        Id = 4,
+                        Caption = "",
+                        DateCreated = DateTime.Now,
+                        FileSize = 100,
+                        ImagePath = "804e1e0c-ec76-4fd9-a91f-d400e99ff414.jpeg",
+                        Isdefault = true,
+                        ProductId = 4,
+                        SortOrder = 1
+
+                    },
+                     new ProductImage()
+                     {
+
+                         Id = 5,
+                         Caption = "",
+                         DateCreated = DateTime.Now,
+                         FileSize = 100,
+                         ImagePath = "bd360e3b-e1f1-4ec6-b33b-a6c7a69e665c.jpg",
+                         Isdefault = true,
+                         ProductId = 5,
+                         SortOrder = 1
+
+                     },
+                      new ProductImage()
+                      {
+
+                          Id = 6,
+                          Caption = "",
+                          DateCreated = DateTime.Now,
+                          FileSize = 100,
+                          ImagePath = "e0254137-2422-40d4-ba03-a3cf6559bf17.jpg",
+                          Isdefault = true,
+                          ProductId = 6,
+                          SortOrder = 1
+
+                      }
+
 
                 );
 

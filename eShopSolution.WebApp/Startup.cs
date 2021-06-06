@@ -5,8 +5,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using eShopSolution.ApiIntergration;
+using eShopSolution.ViewModels.System.Users;
 using eShopSolution.WebApp.LocalizationResources;
+using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +39,10 @@ namespace eShopSolution.WebApp
                 new CultureInfo("en"),
                 new CultureInfo("vi"),
             };
+          
+
             services.AddControllersWithViews()
+                   .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
                  .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
                  {
                      // When using all the culture providers, the localization process will
@@ -58,6 +64,7 @@ namespace eShopSolution.WebApp
 
                      // Uncomment and set to true to use only route culture provider
                      //ops.UseAllCultureProviders = false;
+                     ops.UseAllCultureProviders = false;
                      ops.ResourcesPath = "LocalizationResources";
                      ops.RequestLocalizationOptions = o =>
                      {
@@ -66,6 +73,15 @@ namespace eShopSolution.WebApp
                          o.DefaultRequestCulture = new RequestCulture("vi"); // ngôn ngữ mặc định
                      };
                  });
+
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+         .AddCookie(options =>
+         {
+             options.LoginPath = "/Account/Login";
+             options.AccessDeniedPath = "/User/Forbidden/";
+         });
+
             services.AddSession(options =>
             {
                 // set thời gian thoát của Session //quy định nhỏ nhất là 20'
@@ -74,6 +90,8 @@ namespace eShopSolution.WebApp
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<ISlideApiClient, SlideApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
         }
 
@@ -92,7 +110,7 @@ namespace eShopSolution.WebApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();

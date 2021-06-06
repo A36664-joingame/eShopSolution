@@ -50,13 +50,13 @@ namespace eShopSolution.ApiIntergration
             var sessions = _httpContextAccessor
                 .HttpContext
                 .Session // Session được cài đạt trong startup
-                .GetString(SystemConstants.Appsettings.Token);
-            var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.Appsettings.DefaultLanguageId);
+                .GetString(SystemConstants.AppSettings.Token);
+            var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
             // tạo ra một client
             var client = _httpClientFactory.CreateClient();
             // có địa chỉ giống địa chỉ cấu hình local host bên appsetting
-            client.BaseAddress = new Uri(_configuration[SystemConstants.Appsettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             //ủy quyền token giống đăng nhập Swagger để mở khóa
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
@@ -92,7 +92,7 @@ namespace eShopSolution.ApiIntergration
         public async Task<int> UpdateProduct(ProductUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.Appsettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
@@ -117,10 +117,10 @@ namespace eShopSolution.ApiIntergration
             var sessions = _httpContextAccessor
                   .HttpContext
                   .Session
-                  .GetString(SystemConstants.Appsettings.Token);
+                  .GetString(SystemConstants.AppSettings.Token);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.Appsettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/products/{id}/{LanguageId}"); // đúng đương dẫn đấy
             var body = await response.Content.ReadAsStringAsync(); // đọc nội dung chuỗi lấy từ response về
@@ -223,10 +223,10 @@ namespace eShopSolution.ApiIntergration
             var sessions = _httpContextAccessor
                   .HttpContext
                   .Session
-                  .GetString(SystemConstants.Appsettings.Token);
+                  .GetString(SystemConstants.AppSettings.Token);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.Appsettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/products/images/{imageId}");
             var body = await response.Content.ReadAsStringAsync();

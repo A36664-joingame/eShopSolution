@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eShopSolution.Data.Migrations
 {
-    public partial class Migrations : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,8 @@ namespace eShopSolution.Data.Migrations
                 name: "AppConfigs",
                 columns: table => new
                 {
-                    Key = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: false)
+                    Key = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -23,11 +23,11 @@ namespace eShopSolution.Data.Migrations
                 name: "AppRoles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    NormalizedName = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(maxLength: 200, nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,11 +38,11 @@ namespace eShopSolution.Data.Migrations
                 name: "AppUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,10 +53,10 @@ namespace eShopSolution.Data.Migrations
                 name: "AppUserLogins",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: true),
-                    ProviderKey = table.Column<string>(nullable: true),
-                    ProviderDisplayName = table.Column<string>(nullable: true)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProviderKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,11 +67,11 @@ namespace eShopSolution.Data.Migrations
                 name: "AppUserRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<Guid>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,8 +82,8 @@ namespace eShopSolution.Data.Migrations
                 name: "AppUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
-                    RoleId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,24 +94,24 @@ namespace eShopSolution.Data.Migrations
                 name: "AppUsers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 200, nullable: false),
-                    LastName = table.Column<string>(maxLength: 200, nullable: false),
-                    DOB = table.Column<DateTime>(nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,10 +122,10 @@ namespace eShopSolution.Data.Migrations
                 name: "AppUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -136,12 +136,12 @@ namespace eShopSolution.Data.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SortOrder = table.Column<int>(nullable: false),
-                    IsShowOnHome = table.Column<bool>(nullable: false),
-                    ParentId = table.Column<int>(nullable: true),
-                    Status = table.Column<int>(nullable: false, defaultValue: 1)
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    IsShowOnHome = table.Column<bool>(type: "bit", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {
@@ -152,13 +152,13 @@ namespace eShopSolution.Data.Migrations
                 name: "Contacts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
-                    Email = table.Column<string>(maxLength: 200, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 200, nullable: false),
-                    Message = table.Column<string>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,9 +169,9 @@ namespace eShopSolution.Data.Migrations
                 name: "Languages",
                 columns: table => new
                 {
-                    Id = table.Column<string>(unicode: false, maxLength: 5, nullable: false),
-                    Name = table.Column<string>(maxLength: 20, nullable: false),
-                    IsDefault = table.Column<bool>(nullable: false)
+                    Id = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -182,14 +182,14 @@ namespace eShopSolution.Data.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<decimal>(nullable: false),
-                    OriginalPrice = table.Column<decimal>(nullable: false),
-                    Stock = table.Column<int>(nullable: false, defaultValue: 0),
-                    ViewCount = table.Column<int>(nullable: false, defaultValue: 0),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    IsFeatured = table.Column<bool>(nullable: true)
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OriginalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ViewCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsFeatured = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -200,17 +200,17 @@ namespace eShopSolution.Data.Migrations
                 name: "Promotions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FromDate = table.Column<DateTime>(nullable: false),
-                    ToDate = table.Column<DateTime>(nullable: false),
-                    ApplyForAll = table.Column<bool>(nullable: false),
-                    DiscountPercent = table.Column<int>(nullable: true),
-                    DiscountAmount = table.Column<decimal>(nullable: true),
-                    ProductIds = table.Column<string>(nullable: true),
-                    ProductCategoryIds = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ApplyForAll = table.Column<bool>(type: "bit", nullable: false),
+                    DiscountPercent = table.Column<int>(type: "int", nullable: true),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ProductIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductCategoryIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -221,15 +221,15 @@ namespace eShopSolution.Data.Migrations
                 name: "Slides",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(maxLength: 200, nullable: false),
-                    Url = table.Column<string>(maxLength: 200, nullable: false),
-                    SortOrder = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    Image = table.Column<string>(maxLength: 200, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -240,15 +240,15 @@ namespace eShopSolution.Data.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    ShipName = table.Column<string>(maxLength: 200, nullable: false),
-                    ShipAddress = table.Column<string>(maxLength: 200, nullable: false),
-                    ShipEmail = table.Column<string>(unicode: false, maxLength: 50, nullable: false),
-                    ShipPhoneNumber = table.Column<string>(maxLength: 200, nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ShipName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ShipAddress = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ShipEmail = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
+                    ShipPhoneNumber = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -265,17 +265,17 @@ namespace eShopSolution.Data.Migrations
                 name: "Transactions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TransactionDate = table.Column<DateTime>(nullable: false),
-                    ExternalTransactionId = table.Column<string>(nullable: true),
-                    Amount = table.Column<decimal>(nullable: false),
-                    Fee = table.Column<decimal>(nullable: false),
-                    Result = table.Column<string>(nullable: true),
-                    Message = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Provider = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false)
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExternalTransactionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Fee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Result = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Provider = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -292,14 +292,14 @@ namespace eShopSolution.Data.Migrations
                 name: "CategoryTranslations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
-                    SeoDescription = table.Column<string>(maxLength: 500, nullable: true),
-                    SeoTitle = table.Column<string>(maxLength: 200, nullable: true),
-                    LanguageId = table.Column<string>(unicode: false, maxLength: 5, nullable: false),
-                    SeoAlias = table.Column<string>(maxLength: 200, nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    SeoDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    SeoTitle = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    LanguageId = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false),
+                    SeoAlias = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -322,27 +322,27 @@ namespace eShopSolution.Data.Migrations
                 name: "Carts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carts_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Carts_AppUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Carts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -351,15 +351,15 @@ namespace eShopSolution.Data.Migrations
                 name: "ProductImages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(nullable: false),
-                    ImagePath = table.Column<string>(maxLength: 200, nullable: false),
-                    Caption = table.Column<string>(maxLength: 200, nullable: true),
-                    Isdefault = table.Column<bool>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    SortOrder = table.Column<int>(nullable: false),
-                    FileSize = table.Column<long>(nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Caption = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Isdefault = table.Column<bool>(type: "bit", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -376,8 +376,8 @@ namespace eShopSolution.Data.Migrations
                 name: "ProductInCategories",
                 columns: table => new
                 {
-                    ProductId = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -400,16 +400,16 @@ namespace eShopSolution.Data.Migrations
                 name: "ProductTranslations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Details = table.Column<string>(maxLength: 500, nullable: true),
-                    SeoDescription = table.Column<string>(nullable: true),
-                    SeoTitle = table.Column<string>(nullable: true),
-                    SeoAlias = table.Column<string>(maxLength: 200, nullable: false),
-                    LanguageId = table.Column<string>(unicode: false, maxLength: 5, nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Details = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    SeoDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SeoTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SeoAlias = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    LanguageId = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -432,10 +432,10 @@ namespace eShopSolution.Data.Migrations
                 name: "OrderDetails",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false)
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -467,17 +467,17 @@ namespace eShopSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("3792af46-9a8f-4ae6-a1c9-c9c910941e5b"), "271f8f51-9324-4746-9b20-1d71532ab9e5", "Administrator role", "admin", "admin" });
+                values: new object[] { new Guid("3792af46-9a8f-4ae6-a1c9-c9c910941e5b"), "86c69cc0-ef2d-474b-8ba9-b18f395344ae", "Administrator role", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AppUserRoles",
-                columns: new[] { "UserId", "RoleId" },
-                values: new object[] { new Guid("be525247-1560-4657-8748-3563e08d7ed3"), new Guid("3792af46-9a8f-4ae6-a1c9-c9c910941e5b") });
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { new Guid("3792af46-9a8f-4ae6-a1c9-c9c910941e5b"), new Guid("be525247-1560-4657-8748-3563e08d7ed3") });
 
             migrationBuilder.InsertData(
                 table: "AppUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DOB", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("be525247-1560-4657-8748-3563e08d7ed3"), 0, "de13d947-1844-4555-ad8f-fb9140bb5266", new DateTime(2001, 6, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), "nguyenluc2001@gmail.com", true, "luc", "van", false, null, "nguyenluc2001@gmail.com", "admin", "AQAAAAEAACcQAAAAELrn+6mg339NoKCPuGE9YIAtr4zAnOPZhH0m1vsUlwMZzihTz0QMEvUN7uznVhfaXw==", null, false, "", false, "admin" });
+                values: new object[] { new Guid("be525247-1560-4657-8748-3563e08d7ed3"), 0, "f27d6a6a-2fc4-42f0-8125-88fb3695f938", new DateTime(2001, 6, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), "nguyenluc2001@gmail.com", true, "luc", "van", false, null, "nguyenluc2001@gmail.com", "admin", "AQAAAAEAACcQAAAAEDTSCvQZyC0H6jfPGr6xJ4J1kDJ/Bjtg12g5ISDmy5cLERghzIWfG2yOBpE+l0FlWw==", null, false, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -493,25 +493,33 @@ namespace eShopSolution.Data.Migrations
                 columns: new[] { "Id", "IsDefault", "Name" },
                 values: new object[,]
                 {
-                    { "en", false, "Tiếng Anh" },
-                    { "vi", true, "Tiếng Việt" }
+                    { "vi", true, "Tiếng Việt" },
+                    { "en", false, "Tiếng Anh" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price" },
-                values: new object[] { 1, new DateTime(2020, 9, 21, 11, 49, 36, 239, DateTimeKind.Local).AddTicks(8072), null, 1000000m, 2000000m });
+                values: new object[,]
+                {
+                    { 6, new DateTime(2021, 6, 4, 17, 5, 6, 780, DateTimeKind.Local).AddTicks(5807), true, 1000000m, 45000000m },
+                    { 5, new DateTime(2021, 6, 4, 17, 5, 6, 780, DateTimeKind.Local).AddTicks(5805), true, 1000000m, 1200000m },
+                    { 4, new DateTime(2021, 6, 4, 17, 5, 6, 780, DateTimeKind.Local).AddTicks(5803), true, 1000000m, 3000000m },
+                    { 1, new DateTime(2021, 6, 4, 17, 5, 6, 779, DateTimeKind.Local).AddTicks(4099), true, 1000000m, 2000000m },
+                    { 2, new DateTime(2021, 6, 4, 17, 5, 6, 780, DateTimeKind.Local).AddTicks(5652), true, 1000000m, 2000000m },
+                    { 3, new DateTime(2021, 6, 4, 17, 5, 6, 780, DateTimeKind.Local).AddTicks(5800), true, 1000000m, 2500000m }
+                });
 
             migrationBuilder.InsertData(
                 table: "Slides",
                 columns: new[] { "Id", "Description", "Email", "Image", "Name", "SortOrder", "Status", "Url" },
                 values: new object[,]
                 {
+                    { 5, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", null, "/themes/images/carousel/5.png", "Second Thumbnail label", 5, 1, "#" },
                     { 1, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", null, "/themes/images/carousel/1.png", "Second Thumbnail label", 1, 1, "#" },
                     { 2, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", null, "/themes/images/carousel/2.png", "Second Thumbnail label", 2, 1, "#" },
                     { 3, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", null, "/themes/images/carousel/3.png", "Second Thumbnail label", 3, 1, "#" },
                     { 4, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", null, "/themes/images/carousel/4.png", "Second Thumbnail label", 4, 1, "#" },
-                    { 5, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", null, "/themes/images/carousel/5.png", "Second Thumbnail label", 5, 1, "#" },
                     { 6, "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", null, "/themes/images/carousel/6.png", "Second Thumbnail label", 6, 1, "#" }
                 });
 
@@ -527,6 +535,19 @@ namespace eShopSolution.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "ProductImages",
+                columns: new[] { "Id", "Caption", "DateCreated", "FileSize", "ImagePath", "Isdefault", "ProductId", "SortOrder" },
+                values: new object[,]
+                {
+                    { 1, "", new DateTime(2021, 6, 4, 17, 5, 6, 781, DateTimeKind.Local).AddTicks(1879), 100L, "0f75e9c5-b794-4f2d-a328-7de10107b36c.jpg", true, 1, 1 },
+                    { 2, "", new DateTime(2021, 6, 4, 17, 5, 6, 781, DateTimeKind.Local).AddTicks(4363), 100L, "4b3f6988-c6ab-4f18-bf60-e5adf20c6ad3.jpeg", true, 2, 1 },
+                    { 6, "", new DateTime(2021, 6, 4, 17, 5, 6, 781, DateTimeKind.Local).AddTicks(4413), 100L, "e0254137-2422-40d4-ba03-a3cf6559bf17.jpg", true, 6, 1 },
+                    { 3, "", new DateTime(2021, 6, 4, 17, 5, 6, 781, DateTimeKind.Local).AddTicks(4407), 100L, "5b6cd57e-0dab-4a51-9150-36db8773aac8.jpeg", true, 3, 1 },
+                    { 5, "", new DateTime(2021, 6, 4, 17, 5, 6, 781, DateTimeKind.Local).AddTicks(4411), 100L, "bd360e3b-e1f1-4ec6-b33b-a6c7a69e665c.jpg", true, 5, 1 },
+                    { 4, "", new DateTime(2021, 6, 4, 17, 5, 6, 781, DateTimeKind.Local).AddTicks(4409), 100L, "804e1e0c-ec76-4fd9-a91f-d400e99ff414.jpeg", true, 4, 1 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "ProductInCategories",
                 columns: new[] { "CategoryId", "ProductId" },
                 values: new object[] { 1, 1 });
@@ -536,8 +557,12 @@ namespace eShopSolution.Data.Migrations
                 columns: new[] { "Id", "Description", "Details", "LanguageId", "Name", "ProductId", "SeoAlias", "SeoDescription", "SeoTitle" },
                 values: new object[,]
                 {
-                    { 1, "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực", "vi", "Áo sơ mi nam trắng nguyễn lực", 1, "ao-so-mi-nam-trang-nguyen-luc", "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực" },
-                    { 2, "nguyen luc Men T-Shirt", "nguyen luc Men T-Shirt", "en", "nguyen luc Men T-Shirt", 1, "nguyen-luc-men-T-shirt", "nguyen luc Men T-Shirt", "nguyen luc Men T-Shirt" }
+                    { 5, "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực", "vi", "Áo sơ mi nam trắng nguyễn lực", 5, "ao-so-mi-nam-trang-nguyen-luc", "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực" },
+                    { 2, "Cơm gà ngon bổ rẻ", "Cơm gà ngon bổ rẻ", "vi", "Cơm gà", 2, "com-ga", "Cơm gà ngon bổ rẻ", "Cơm gà" },
+                    { 3, "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực", "vi", "Áo sơ mi nam trắng nguyễn lực", 3, "ao-so-mi-nam-trang-nguyen-luc", "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực" },
+                    { 1, "Cơm gà ngon bổ rẻ", "Cơm gà ngon bổ rẻ", "vi", "Cơm gà", 1, "com-ga", "Cơm gà ngon bổ rẻ", "Cơm gà" },
+                    { 4, "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực", "vi", "Áo sơ mi nam trắng nguyễn lực", 4, "ao-so-mi-nam-trang-nguyen-luc", "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực" },
+                    { 6, "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực", "vi", "Áo sơ mi nam trắng nguyễn lực", 6, "ao-so-mi-nam-trang-nguyen-luc", "Áo sơ mi nam trắng nguyễn lực", "Áo sơ mi nam trắng nguyễn lực" }
                 });
 
             migrationBuilder.CreateIndex(

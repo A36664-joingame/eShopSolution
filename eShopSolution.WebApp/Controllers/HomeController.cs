@@ -37,8 +37,8 @@ namespace eShopSolution.WebApp.Controllers
             var msg = _loc.GetLocalizedString("Vietnamese");
             var slides = await _slideApiClient.GetAll();
             var languageId = CultureInfo.CurrentCulture.Name;
-            var FeaturedProducts = await _productApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.TakeFeaturedProduct, languageId);
-            var LatestProducts = await _productApiClient.GetLatestProducts(SystemConstants.ProductSettings.TakeLatestProducts, languageId);
+            var FeaturedProducts = await _productApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts, languageId);
+            var LatestProducts = await _productApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts, languageId);
 
             var viewModel = new HomeViewModel()
             {

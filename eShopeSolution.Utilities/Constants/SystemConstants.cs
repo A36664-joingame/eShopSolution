@@ -7,22 +7,23 @@ namespace eShopeSolution.Utilities.Constants
     public class SystemConstants
     {
         public const string MainConnectionString = "eShopSolutionDb";
+        public const string CartSession = "CartSession";
 
-        public class Appsettings
+        public class AppSettings
         {
             public const string DefaultLanguageId = "DefaultLanguageId";
-
             public const string Token = "Token";
-
             public const string BaseAddress = "BaseAddress";
         }
 
         public class ProductSettings
         {
-            public const int TakeFeaturedProduct = 16;
-            public const int TakeLatestProducts = 6;
+            public const int NumberOfFeaturedProducts = 4;
+            public const int NumberOfLatestProducts = 6;
         }
-        public class ProductConstants {
+
+        public class ProductConstants
+        {
             public const string NA = "N/A";
         }
     }

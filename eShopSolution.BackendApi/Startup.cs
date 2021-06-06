@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using eShopeSolution.Utilities.Constants;
 using eShopSolution.Application.Catalog.Categories;
+using eShopSolution.Application.Catalog.Orders;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Common;
 using eShopSolution.Application.System.Languages;
@@ -61,6 +62,7 @@ namespace eShopSolution.BackendApi
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddTransient<ILanguageService, LanguageService>();
 

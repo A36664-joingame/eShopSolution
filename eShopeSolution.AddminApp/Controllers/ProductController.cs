@@ -33,7 +33,7 @@ namespace eShopeSolution.AddminApp.Controllers
         // biding từ query nếu để class thì thêm [formQuery]
         public async Task<IActionResult> Index(int? categoryId, string keyword, int pageIndex = 1, int pageSize = 6)
         {
-            var languageId = HttpContext.Session.GetString(SystemConstants.Appsettings.DefaultLanguageId);
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
             var request = new GetManageProductPagingRequest()
             {
@@ -334,7 +334,7 @@ namespace eShopeSolution.AddminApp.Controllers
 
         private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
         {
-            var languageId = HttpContext.Session.GetString(SystemConstants.Appsettings.DefaultLanguageId);
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
             var productObj = await _productApiClient.GetById(id, languageId);
 

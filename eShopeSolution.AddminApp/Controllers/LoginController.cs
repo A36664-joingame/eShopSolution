@@ -67,9 +67,9 @@ namespace eShopeSolution.AddminApp.Controllers
                 IsPersistent = false  // là khi đăng nhập rồi mà tắt chương trình nó vẫn đăng nhập khi chạy lại
             };
 
-            HttpContext.Session.SetString(SystemConstants.Appsettings.DefaultLanguageId, _configuration[SystemConstants.Appsettings.DefaultLanguageId]); // nhớ phải thêm DefaultLanguageId vào trong appsetting của adminApp
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]); // nhớ phải thêm DefaultLanguageId vào trong appsetting của adminApp
 
-            HttpContext.Session.SetString(SystemConstants.Appsettings.Token, result.ResultObj);  //phải add thêm modul token vào trong startup của project AdminApp
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);  //phải add thêm modul token vào trong startup của project AdminApp
 
             // sign-in
             await HttpContext.SignInAsync(
@@ -85,7 +85,7 @@ namespace eShopeSolution.AddminApp.Controllers
         {
             // vào đây mà đọc
             // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-3.1
-            IdentityModelEventSource.ShowPII = true;
+            IdentityModelEventSource.ShowPII = true;   // show log lôiz khi chạy identity
 
             SecurityToken validatedToken;
             TokenValidationParameters validationParameters = new TokenValidationParameters();

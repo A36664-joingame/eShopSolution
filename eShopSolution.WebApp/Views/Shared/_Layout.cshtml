@@ -1,6 +1,7 @@
 ﻿@{
     var culture = CultureInfo.CurrentCulture.Name;
 }
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,10 +35,20 @@
     <style type="text/css" id="enject"></style>
 </head>
 <body>
+
+    <!--đưa culture hiện tại lên cho js sử lý-->
+    <input type="hidden" id="hidCulture" value="@culture" />
+    <input type="hidden" id="hidBaseAddress" value="@Configuration["BaseAddress"]" /><!--lấy cho bên js cart-->
+
     <div id="header">
         <div class="container">
             <div id="welcomeLine" class="row">
-                <div class="span6">Welcome!<strong> User</strong></div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="span6">Welcome!<strong> @User.Identity.Name</strong></div> }
+                else
+                {
+                    <div class="span6">Welcome!<strong> Guest!</strong></div>}
                 <div class="span6">
                     <div class="pull-right">
                         @*<a href="product_summary.html"><span class="">Fr</span></a>
@@ -52,10 +63,10 @@
 
                         <language-nav cookie-handler-url="@Url.Action("SetCultureCookie", "Home", new { area="", cltr="{0}", returnUrl="{1}" })">
                         </language-nav>
-                        <span class="btn btn-mini btn-primary">
-                            <!--giỏ hàng-->
-                            <i class="icon-shopping-cart icon-white"></i> [ 3 ] Itemes in your cart
-                        </span>
+                        <a href="/@culture/cart">
+                            <span class="btn btn-mini btn-primary">
+                                <i class="icon-shopping-cart icon-white"></i> [ <span id="lbl_number_items_header">0</span> ] Itemes in your cart
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -86,33 +97,43 @@
                         <li class=""><a asp-route-culture="@culture" localize-content>Delivery</a></li>
                         <li class=""><a asp-route-culture="@culture" localize-content>Contact</a></li>
                         <li class="">
-                            <a href="#login" role="button" data-toggle="modal" style="padding-right:0">
-                                #
-                                <span class="btn btn-large btn-success"><localize>Login</localize></span>
-                            </a>
-                            <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3>Login Block</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <form class="form-horizontal loginFrm">
-                                        <div class="control-group">
-                                            <input type="text" id="inputEmail" placeholder="Email">
-                                        </div>
-                                        <div class="control-group">
-                                            <input type="password" id="inputPassword" placeholder="Password">
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="checkbox">
-                                                <input type="checkbox"> Remember me
-                                            </label>
-                                        </div>
-                                    </form>
-                                    <button type="submit" class="btn btn-success">Sign in</button>
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                                </div>
-                            </div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <form action="/@culture/Account/Logout" method="post">
+                                    <button type="submit" style="padding-right:0;margin-top:10px;margin-bottom:0px;background:transparent;border:none;">
+                                        <span class="btn btn-large btn-success"><localize>Logout</localize></span>
+                                    </button>
+                                </form>
+                            }
+                            else
+
+                            {
+                                <a href="/@culture/Account/Login" style="padding-right:0">
+                                    <span class="btn btn-large btn-success"><localize>Login</localize></span>
+                                </a>}
+                            @*<div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h3>Login Block</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal loginFrm">
+                                            <div class="control-group">
+                                                <input type="text" id="inputEmail" placeholder="Email">
+                                            </div>
+                                            <div class="control-group">
+                                                <input type="password" id="inputPassword" placeholder="Password">
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="checkbox">
+                                                    <input type="checkbox"> Remember me
+                                                </label>
+                                            </div>
+                                        </form>
+                                        <button type="submit" class="btn btn-success">Sign in</button>
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    </div>
+                                </div>*@
                         </li>
                     </ul>
                 </div>
@@ -178,6 +199,15 @@
 
     <script src="/themes/js/bootshop.js"></script>
     <script src="/themes/js/jquery.lightbox-0.5.js"></script>
+
+    <!--add js sử lý cart-->
+    <script src="/js/site.js"></script>
+    <script>
+        var site = new SiteController();
+        site.initialize();
+    </script>
+    @RenderSection("scripts", required: false) <!--trang con có cũng dc ko thì thôi-->
+
 
     <!-- Themes switcher section ============================================================================================= -->
     <div id="secectionBox">

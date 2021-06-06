@@ -36,7 +36,7 @@ namespace eShopeSolution.AddminApp.Controllers
         [HttpPost]
         public IActionResult Language(NavigationViewModel viewModel)
         {
-            HttpContext.Session.SetString(SystemConstants.Appsettings.DefaultLanguageId, viewModel.CurrentLanguageId);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, viewModel.CurrentLanguageId);
             return Redirect(viewModel.ReturnUrl);
         }
     }

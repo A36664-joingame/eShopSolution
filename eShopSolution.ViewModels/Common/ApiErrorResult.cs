@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,6 +23,18 @@ namespace eShopSolution.ViewModels.Common
         {
             IsSuccessed = false;
             ValidationErrors = validationErrors;
+        }
+
+        public ApiErrorResult(List<IdentityError> validationErrors)
+        {
+            IsSuccessed = false;
+        
+        foreach(var item in validationErrors)
+            {
+                Message += item.Description + "\n";
+            }
+
+          
         }
     }
 }

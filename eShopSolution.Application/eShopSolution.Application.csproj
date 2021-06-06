@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Catalog\Orders\OrderService.cs~RF11405b28.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
